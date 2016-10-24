@@ -46,7 +46,8 @@ public class Melody {
 				break;
 		case 3: createNoteWritten();
 				break;
-		case 4: System.exit(0);
+		case 4: System.out.println("Goodbye!");
+				System.exit(0);
 				break;
 		}
 		
@@ -55,29 +56,40 @@ public class Melody {
 	private static void createNoteWritten() {
 		String input;
 		while(true){
-			System.out.println("\n Please write your note. (ex. C4#): ");
+			System.out.println("\n Please write your note. Range from C-1 to G9. (Write 'back' to go back to Main Menu): ");
 			input = sc.nextLine();
+			if(input.equalsIgnoreCase("back"))
+				mainMenu();
 			try {
 				note = new Note(input);
+				if(note.getMIDIValue() > 103)
+					System.out.println("\n This note is too high a value. There is not octave that can be played. ");
+				else
+					break;
 			} catch (InvalidNoteException e) {
 				System.out.println("\n\n" + input + " is an Incorrect Value!\n");
 			}
-			break;
-		}
+					
+			}
 		playMelody();
 	}
 
 	private static void createNoteSemitones() {
 		String input;
 		while(true){
-			System.out.println("\n Please write the amount of half tones/semitones. (ex. 69): ");
+			System.out.println("\n Please write the amount of half tones/semitones. Range from -69 to 58. (Write 'back' to go back to Main Menu): ");
 			input = sc.nextLine();
+			if(input.equalsIgnoreCase("back"))
+				mainMenu();
 			try {
 				note = new Note(Integer.parseInt(input));
+				if(note.getMIDIValue() > 103)
+					System.out.println("\n This note is too high a value. There is not octave that can be played. ");
+				else
+					break;
 			} catch (InvalidNoteException e) {
 				System.out.println("\n\n" + input + " is an Incorrect Value!\n");
 			}
-			break;
 		}
 		playMelody();
 	}
@@ -85,15 +97,20 @@ public class Melody {
 	private static void createNoteFreq() {
 		String input;
 		while(true){
-			System.out.println("\n Please write the frequency in hertz. (ex. 440.0): ");
+			System.out.println("\n Please write the frequency in hertz. Range from 8 to 12543.  (Write 'back' to go back to Main Menu): ");
 			input = sc.nextLine();
+			
 			try {
 				note = new Note(Double.parseDouble(input));
+				if(note.getMIDIValue() > 103)
+						System.out.println("\n This note is too high a value. There is not octave that can be played. ");
+				else
+					break;
 			} catch (InvalidNoteException e) {
 				System.out.println("\n\n" + input + " is an Incorrect Value!\n");
 			}
-			break;
-		}
+		
+			}
 		playMelody();
 	}
 
@@ -121,7 +138,7 @@ public class Melody {
 	       channels = synthesizer.getChannels();
 	       
 	       
-	       while(Math.abs(note.compareTo(comparable)) < 12){
+	       while(Math.abs(note.compareTo(comparable)) <= 12){
 	    	   channels[1].noteOn(comparable.getMIDIValue(), 127);
 		       //sets the instrument to play the note.
 		       channels[1].programChange(12);
@@ -135,14 +152,14 @@ public class Melody {
 		       }
 		       channels[1].noteOff(comparable.getMIDIValue(),127);
 		       
-		       try {
+		       try { 
 				comparable.modifyNoteByHalfSteps(1);
 				} catch (InvalidNoteException e) {
 					break;
 				}
 		       
 	       }
-		
+		mainMenu();
 	}
 
 }
