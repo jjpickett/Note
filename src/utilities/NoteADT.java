@@ -57,9 +57,9 @@ public abstract class NoteADT implements Comparable<NoteADT>
 
   public NoteADT(double frequency) throws InvalidNoteException
   {
-	  midiValue = (int)(Math.log(frequency/CONCERT_PITCH_FREQUENCY)
+	  midiValue = (int)Math.round((Math.log(frequency/CONCERT_PITCH_FREQUENCY)
               /Math.log(HALFSTEP_INCREASE_IN_PITCH))+
-              CONCERT_PITCH_MIDI;
+              CONCERT_PITCH_MIDI);
 	  midiNoteValueCheck(midiValue);
   }
 
@@ -110,17 +110,18 @@ public abstract class NoteADT implements Comparable<NoteADT>
 		case 'B':	midiValue = 23;
 					break;
 		default: 
-			midiValue = -1;
+			throw new InvalidNoteException("");
 	}
 	
-	if(letter == 'C' || letter == 'D' || letter == 'F'
-					 || letter == 'G' || letter == 'C'){
-		
-		if(stringNote.contains("#"))
+	if(stringNote.contains("#")){
+		if(letter!='E')
 			midiValue++;
-		else if(stringNote.substring(1, stringNote.length()).contains("b"))
-			midiValue--;
+		else
+			throw new InvalidNoteException("'E' cannot be a Sharp Note");
 	}
+		
+	if(stringNote.substring(1, stringNote.length()).contains("b"))
+		midiValue--;
 
 	if(stringNote.contains("-1"))
 		midiValue -= 12;
@@ -131,16 +132,24 @@ public abstract class NoteADT implements Comparable<NoteADT>
 	
 	midiNoteValueCheck(midiValue);
   }
-
+  /**
+   * Observer method that checks the midi notes calculated value and throws an exception
+   * if the midi value is too high or too low.
+   * 
+   * Preconditions: A calculated midi value is passed in.
+   * 
+   * Postconditions: An error id thrown if the midiValue is to high or low.
+   * 
+   * @param midiValue is the int midiValue of the note
+   */
   private void midiNoteValueCheck(int midiValue) throws InvalidNoteException {
 	if(midiValue < LOW_MIDI_VALUE)
-		throw new InvalidNoteException("Invalid Note, this brings the MIDI below 0.");
+		throw new InvalidNoteException("This brings the MIDI value below 0.");
 	else if(midiValue > HIGH_MIDI_VALUE)
-		throw new InvalidNoteException("Invalid Note, this brings the MIDI above 127.");
+		throw new InvalidNoteException("This brings the MIDI value above 127. ");
+	
 }
-
-
-/**
+  /**
    * Transformer method that returns the frequency of note in cycles per second - Hertz (Hz)
    * 
    * Preconditions: A valid NoteADT object exists.

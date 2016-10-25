@@ -1,20 +1,17 @@
 package exceptions;
 
 /**
- * 
+ * This is a custom exception created
+ * for the creation of notes.
  * @author Jordan Pickett
- * @version 1.0.0
+ * @version 1.0.0.0
  * 
  */
-@SuppressWarnings("serial")
 public class InvalidNoteException extends Exception {
-	
 	/**
 	 * Constructor for the postal code exception
 	 */
-	public InvalidNoteException(){
-		
-	}
+	public InvalidNoteException(){}
 	/**
 	 * Main constructor that returns a message
 	 * 
@@ -23,5 +20,4 @@ public class InvalidNoteException extends Exception {
 	public InvalidNoteException(String msg){
 		super(msg);
 	}
-
 }
