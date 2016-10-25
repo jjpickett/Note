@@ -328,7 +328,8 @@ public class NoteTest {
 	 * This method will test to see if the compareTo method is working as
 	 * intended. If the value the values are the same, a 0 will be returned
 	 * to the user.
-	 * @throws InvalidNoteException
+	 * @throws InvalidNoteException is an exception being thrown for
+	 * the Note constructor
 	 */
 	@Test
 	public void testCompareToEqual() throws InvalidNoteException{

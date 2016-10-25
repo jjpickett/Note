@@ -7,19 +7,25 @@ import utilities.NoteADT;
  */
 public class Note extends NoteADT{
 	/**
-	 * @see NoteADT#Note(double)
+	 * @see NoteADT#NoteADT(double)
+	 * @param frequency of note
+	 * @throws InvalidNoteException is thrown when the midi note value falls outside of the range of 0-127
 	 */
 	public Note(double frequency) throws InvalidNoteException {
 		super(frequency);
 	}
 	/**
-	 * @see NoteADT#Note(int)
+	 * @see NoteADT#NoteADT(int)
+	 * @param halfSteps value of note
+	 * @throws InvalidNoteException is thrown when the midi note value falls outside of the range of 0-127
 	 */
 	public Note(int halfSteps) throws InvalidNoteException {
 		super(halfSteps);
 	}
 	/**
-	 * @see NoteADT#Note(String)
+	 * @see NoteADT#NoteADT(String)
+	 * @param stringNote String representation of the note
+	 * @throws InvalidNoteException is thrown when the midi note value falls outside of the range of 0-127
 	 */
 	public Note(String stringNote) throws InvalidNoteException {
 		super(stringNote);

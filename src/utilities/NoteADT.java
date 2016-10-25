@@ -54,7 +54,6 @@ public abstract class NoteADT implements Comparable<NoteADT>
    * @param frequency of note
    * @throws InvalidNoteException is thrown when the midi note value falls outside of the range of 0-127
    */
-
   public NoteADT(double frequency) throws InvalidNoteException
   {
 	  midiValue = (int)Math.round((Math.log(frequency/CONCERT_PITCH_FREQUENCY)
@@ -141,6 +140,7 @@ public abstract class NoteADT implements Comparable<NoteADT>
    * Postconditions: An error id thrown if the midiValue is to high or low.
    * 
    * @param midiValue is the int midiValue of the note
+   * @throws InvalidNoteException is thrown when the midi note value falls outside of the range of 0-127
    */
   private void midiNoteValueCheck(int midiValue) throws InvalidNoteException {
 	if(midiValue < LOW_MIDI_VALUE)
